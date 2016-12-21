@@ -1,0 +1,104 @@
+==========================================
+
+          19/01/2017
+
+
+         TS1 TS2 TS3 TS4
+         
+ user1    x
+ user2    x   x
+ user3    x       x
+ 
+         [submit/save]  -> time_slot_assignment_controller#create  : params[[]] -> create TimeSlotAssignment records in DB
+
+Models 
+======
+app/models/user.rb                  User               (id, login/logout, devise etc.)
+app/models/time_slot.rb             TimeSlot           (id, start_time: 9AM, end_time 10AM, {day_of_week: Monday} optional)
+app/models/time_slot_assignment.rb  TimeSlotAssignemt  (id, user_id, time_slot_id, date: 19/01/2017)
+
+
+Relationships between models
+============================
+TimeSlotAssignemt:  belongs_to :user, belongs_to: time_slot
+User: has_many: :time_slot_assignemnts 
+TimeSlot: has_many: :time_slot_assignemnts 
+
+
+Starting data in database, users and existing timeslots
+====================================
+3 Users     (user1, user2, user3)
+4 TimeSlots (TS1, TS2, TS3, TS4, TS5)
+
+
+
+
+Example creating timeslot assignments
+=====================================
+
+19/01/2017
+
+SUBMIT
+
+5 TimeSlotAssignments:
+
+  1st x - user_id: user1.id, time_slot_id: TS1.id, date: (from date picker)
+   2nd x - user_id: user2.id, time_slot_id: TS1.id, date: (from date picker)
+    3rd x - user_id: user3.id, time_slot_id: TS1.id, date: (from date picker)
+     4rd x - user_id: user2.id, time_slot_id: TS2.id, date: (from date picker)
+      5rd x - user_id: user3.id, time_slot_id: TS3.id, date: (from date picker)
+
+ 
+ 
+ 
+ HTML Table layout:
+ 
+<%= form_for ... do |f| %>
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Timeslot1 (9-10)</th>
+        <th>Timeslot2 (10-11)</th>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+      </tr>
+      <tr>
+        <td>Alfreds Futterkiste</td>
+        <td><input type="checkbox" /></td>
+        <td><input type="checkbox" /></td>
+      </tr>
+    </table>
+
+
+    <p><%= f.submit %></p>
+  </div>
+<% end %>
+
+
+
+CSS for table
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #CCCCCC;
+}

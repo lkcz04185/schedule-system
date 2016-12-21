@@ -2,7 +2,98 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1 {
-  color: blue;
-  font-style: bold;
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  height: 100%;
+}
+
+
+.navbar {
+  border-radius: 0px;
+  font-family: 'Helvetica neue', Helvetica;
+  font-weight: 200;
+  -webkit-box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+  -moz-box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+  box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+  background-color: black;
+  border: black;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-inverse, .navbar-brand {
+ font-family: 'Helvetica neue', Helvetica;
+  font-weight: 100;
+  font-color: white;
+}
+
+.hero {
+  background: url('squash.jpg') no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 320px;
+  margin: 0;
+  -webkit-box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+  -moz-box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+  box-shadow: 0px 5px 5px 5px rgba(115,115,115,1);
+}
+
+.frosty {
+  background: rgba(0, 0,  0, 0.5);
+  color: white;
+}
+
+.frosty h1 {
+  font-family: 'Helvetica neue', Helvetica;
+  font-weight: 100;
+  font-color: white;
+  text-shadow: rgba(0, 0, 0, 0.95) 2px 2px;
+}
+
+.frosty h2 {
+  font-family: 'Helvetica neue', Helvetica;
+  font-weight: 200;
+  text-shadow: rgba(0, 0, 0, 0.95) 2px 2px;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.booyah-box {
+  -moz-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  -webkit-box-shadow: 1px 1px 2px 0 #d0d0d0;
+  box-shadow: 1px 1px 2px 0 #d0d0d0;
+  background: #EAE9F2;
+  border: 1px solid #ccc;
+  border-color: #e4e4e4 #bebebd #bebebd #e4e4e4;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+$footer-height: 70px;
+
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -$footer-height;
+  /* Pad bottom by footer height */
+  padding: 0 0 90px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: $footer-height;
+  color: white;
+  background-color: rgba(36,32,33,0.9);
+  padding: 10px 0px;
+}
+
+.clr {
+  clear: both;
 }
