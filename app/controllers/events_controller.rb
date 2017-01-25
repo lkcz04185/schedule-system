@@ -1,4 +1,4 @@
 class EventsController < ApplicationController
-  def index
+  def index   
   end
 end

@@ -1,0 +1,45 @@
+<br/>
+<div class="col-xs-10 col-xs-offset-1">
+  <%= form_tag enrollments_path do %> 
+    <%= hidden_field_tag 'date', @date %>
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+    <b>New Enrollment</b>
+    </div>
+    
+    <div class="panel-body">
+      <p>Enroll here:</p>
+    </div>
+
+    <!-- Table -->  
+     
+    <table class="table">
+      <thead>  
+        <tr>
+          <% @timeslots.each do |time_slot| %>
+            <th><%= time_slot.start_time %> - <%= time_slot.finish_time %></th>
+          <% end %>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr>
+          <% @timeslots.each do |time_slot| %>
+            <td>
+              <%= check_box_tag 'enrollment[time_slot_ids][]', time_slot.id %>
+            </td> 
+          <% end %>      
+         </tr>             
+     
+      </tbody>         
+      
+    </table>
+    
+    
+  </div>
+  <%= submit_tag 'Add Enrollment', class: 'btn btn-danger' %>
+  <% end %>
+</div>
+
+    

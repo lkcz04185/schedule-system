@@ -5,7 +5,7 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body {
+html, body {
   height: 100%;
 }
 
@@ -75,15 +75,16 @@ body {
   margin-top: 30px;
 }
 
-$footer-height: 70px;
+$footer-height: 80px;
 
+/* Wrapper for page content to push down footer */
 #wrap {
   min-height: 100%;
   height: auto;
   /* Negative indent footer by its height */
   margin: 0 auto -$footer-height;
   /* Pad bottom by footer height */
-  padding: 0 0 90px;
+  padding: 0 0 $footer-height;
 }
 
 /* Set the fixed height of the footer here */
@@ -92,8 +93,15 @@ $footer-height: 70px;
   color: white;
   background-color: rgba(36,32,33,0.9);
   padding: 10px 0px;
+  margin-top: 20px;
 }
 
 .clr {
   clear: both;
 }
+
+.panel, .panel-heading {
+  border-radius: 0px;
+}
+
+

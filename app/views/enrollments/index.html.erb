@@ -1,0 +1,81 @@
+<br/>
+<div class="col-xs-10 col-xs-offset-1">
+  
+  <html lang="en">
+
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>jQuery UI Datepicker - Display inline</title>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="/resources/demos/style.css">
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script>
+        $( function() {
+          //$( "#datepicker" ).datepicker({ minDate: -20, maxDate: "+1M +10D" });
+          $( "#datepicker" ).datepicker({ onSelect: function(date) {
+            dateArray = date.split('/');
+            window.location.href = "/enrollments/day/" + (dateArray[2]+"-"+dateArray[0]+"-"+dateArray[1]);
+            
+
+          }});
+          $( "#datepicker" ).datepicker( "setDate", "<%= @date.strftime('%m/%d/%Y')%>" );
+        } );
+      </script>
+    </head>
+    
+    <body>
+      Date: <%= @date %> <div id="datepicker"></div> 
+    </body>
+  
+  </html>
+
+  <br />
+
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <b>Current Enrollments</b>
+    </div>
+    
+    <div class="panel-body">
+      <p>Go to "Enroll" to enroll in this week's training:</p>
+    </div>
+
+    
+    <table class="table">
+      
+      <thead>  
+        <tr>
+          <th>Name</th>
+          <% @timeslots.each do |timeslot| %>
+          <th><%= timeslot.start_time %> - <%=timeslot.finish_time %> </th>
+          <% end %>
+        </tr>
+      </thead>
+   
+      <tbody>
+        <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %> <%= user.surname %></td>
+          <% @timeslots.each do |timeslot| %>
+          <td>
+            <% if user.enrollments.where(time_slot: timeslot).exists? %>
+              X
+            <% end %>
+          </td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>         
+
+    </table>
+  
+  </div>
+
+  <%= link_to 'Enroll', new_enrollment_path(date: @date), class: 'btn btn-primary'%>
+
+</div>
+
+

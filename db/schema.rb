@@ -11,12 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204234121) do
+ActiveRecord::Schema.define(version: 20170111123517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "enrollments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "time_slot_id"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "time_slots", force: true do |t|
+    t.string   "time_slot_index"
+    t.integer  "day"
+    t.string   "start_time"
+    t.string   "finish_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "surname"
+    t.boolean  "internal"
+    t.boolean  "active"
+    t.string   "phone_number"
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -27,8 +49,6 @@ ActiveRecord::Schema.define(version: 20161204234121) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.boolean  "internal"
-    t.boolean  "active"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
   end

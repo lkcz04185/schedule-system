@@ -1,0 +1,40 @@
+<br/>
+<div class="col-xs-10 col-xs-offset-1">
+  
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+    <b>Members</b>
+    </div>
+    
+    <div class="panel-body">
+      <p>Contact Information</p>
+    </div>
+
+    <!-- Table -->    
+    <table class="table">
+      <thead>  
+        <tr>
+          <th>Name</th>
+          <th>E-mail</th>
+          <th>Phone</th>
+          <th>Active</th>
+          <th>Internal</th>         
+      </tr>
+      </thead>
+      
+      <tbody>
+      <% @members.each do |user| %>
+        <tr>
+          <td><%= user.name%>&nbsp<%= user.surname %> </td>
+          <td><%= user.email%></td>
+          <td><%= user.phone_number%></td>
+          <td><%= user.active %></td>
+          <td><%= user.internal %></td>
+        </tr>
+      <% end %>
+      </tbody>         
+      
+    </table>
+  </div>
+  
