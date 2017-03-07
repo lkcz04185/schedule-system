@@ -1,7 +1,32 @@
 <br/>
 <div class="col-xs-10 col-xs-offset-1">
   
-  <html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Display inline</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $("#datepicker").datepicker({ 
+      dateFormat: 'yy-mm-dd',
+      onSelect: function(date) {
+      window.location.href = "/enrollments/day/" + date }}); 
+  });
+  </script>
+</head>
+<body>
+ 
+<div id="datepicker"></div>
+ 
+ 
+</body>
+
+  <!-- <html lang="en">
 
     <head>
       <meta charset="utf-8">
@@ -17,11 +42,8 @@
           $( "#datepicker" ).datepicker({ onSelect: function(date) {
             dateArray = date.split('/');
             window.location.href = "/enrollments/day/" + (dateArray[2]+"-"+dateArray[0]+"-"+dateArray[1]);
-            
-
-          }});
-          $( "#datepicker" ).datepicker( "setDate", "<%= @date.strftime('%m/%d/%Y')%>" );
-        } );
+            }});
+         
       </script>
     </head>
     
@@ -29,14 +51,15 @@
       Date: <%= @date %> <div id="datepicker"></div> 
     </body>
   
-  </html>
+  </html> -->
 
   <br />
 
   <div class="panel panel-primary">
     <!-- Default panel contents -->
     <div class="panel-heading">
-      <b>Current Enrollments</b>
+      <h4> Current Enrollments</h4>
+      <p> <b> <%= @date.strftime("%a%e.%_m. %_Y") %> </b> <p>
     </div>
     
     <div class="panel-body">
@@ -58,7 +81,9 @@
       <tbody>
         <% @users.each do |user| %>
         <tr>
+          <% if user.enrollments.blank? == false %>
           <td><%= user.name %> <%= user.surname %></td>
+          <% end %>
           <% @timeslots.each do |timeslot| %>
           <td>
             <% if user.enrollments.where(time_slot: timeslot).exists? %>

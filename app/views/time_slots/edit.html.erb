@@ -1,1 +1,22 @@
-<%= @time_slot %>
+<div class="booyah-box col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2">
+
+  <div class="modal-body">
+    <%= simple_form_for @time_slot do |f| %>
+    <%= f.input :time_slot_index, label: 'Time Slot Name', required: true, hint: ("format: Time Slot 1") %>
+    <br />
+    <p> * <b> Day </b> </p>
+    <%= f.select :day, Date::DAYNAMES.zip((0..6).to_a), label: 'Day', required: true  %>
+    <br />
+    <br />
+    <%= f.input :start_time, label: 'Start time', required: true, hint: ("format: 07:30") %>
+    <br />
+    <%= f.input :finish_time, label: 'Finish time', required: true, hint: ("format: 09:30") %>  
+  </div>
+      
+  <div class="modal-footer">
+    <%= link_to 'Back to Time Slots', time_slots_path, class: 'btn btn-primary'%>
+    <%= f.submit 'Update Time Slot', class: 'btn btn-danger' %>
+  <% end %>
+  </div>
+
+</div>

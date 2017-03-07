@@ -1,5 +1,5 @@
 class EnrollmentsController < ApplicationController
-
+before_action :authenticate_user!, only: [:new, :create]
   def index
      @date = Date.parse(params[:date] || Date.today.to_s)
      # TODO this action should accept a day parameter params[:date]

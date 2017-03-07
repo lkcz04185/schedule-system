@@ -1,6 +1,7 @@
 class TimeSlotsController < ApplicationController
+  before_action :authenticate_user!
   def index
-    @time_slots = TimeSlot.all
+    @time_slots = TimeSlot.order("time_slot_index").all
   end
 
   def create
@@ -13,6 +14,12 @@ class TimeSlotsController < ApplicationController
 
   def edit
      @time_slot = TimeSlot.find(params[:id])
+  end
+
+  def destroy
+    @time_slot = TimeSlot.find(params[:id])
+    @time_slot.destroy
+    redirect_to time_slots_path
   end
 
   private
