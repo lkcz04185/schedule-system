@@ -10,6 +10,12 @@ class TimeSlotsController < ApplicationController
   end
 
   def update
+    @time_slot = TimeSlot.find(params[:id])
+      if @time_slot.update_attributes(time_slot_params)
+        redirect_to time_slots_path
+      else
+        render :edit
+      end
   end
 
   def edit

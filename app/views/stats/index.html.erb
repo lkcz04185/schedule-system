@@ -1,0 +1,91 @@
+<br/>
+<div class="container">
+
+  <script>
+  $( function() {
+      from = $( "#from" )
+        .datepicker({
+          defaultDate: "+1w",
+          dateFormat: 'yy-mm-dd',
+          changeMonth: true,
+          numberOfMonths: 3
+        })
+        .on( "change", function(event) {
+          to.datepicker( "option", "minDate", getDate(this));
+        })
+
+      to = $( "#to" ).datepicker({
+        defaultDate: "+1w",
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        numberOfMonths: 3
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+      return date
+      }
+  } );
+  </script>
+
+
+
+  <%= form_tag stats_path, method: :get do %>
+  <label for="from">From</label>
+  <input type="text" id="from" name="from">
+  <label for="to">to</label>
+  <input type="text" id="to" name="to">
+  <%= submit_tag 'Search', class: 'btn' %>
+  <% end %>
+ 
+ </div>
+
+<br />
+<br />
+
+  <div class="stat-panel">
+    <div class="panel panel-primary">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+      <b>Enrollments</b>
+      </div>   
+
+
+      <!-- Table -->    
+      <table class="table">
+        <thead>  
+          <tr>
+            <th>Name</th>
+            <% @enrollments.each do |date, enrollment| %>
+            <th> <%= date.strftime("%e.%_m.") %> </th>
+             <% end %>             
+          </tr>
+        </thead>
+        
+        <tbody>
+       
+          <tr>           
+            <td>
+             
+            </td>
+           <% @enrollments_counts.each do |date, enrollment| %>
+            <td> <%= date %> </td>
+             <% end %>           
+          </tr>
+       
+
+          
+        </tbody>         
+       
+      </table>
+    </div>
+  </div>
+

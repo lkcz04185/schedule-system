@@ -5,6 +5,13 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Select a Date Range</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 
@@ -32,8 +39,12 @@
                   
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          <% if user_signed_in? %>
+          <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+          <% else %>
           <li><%= link_to 'Sign in', new_user_session_path %></li>
           <li><%= link_to 'Sign up', new_user_registration_path %></li>
+          <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -49,6 +60,14 @@
     <% end %>
     <!-- custom allert message configuration from devise; bootstrap styling class-->
 
+  <div class="container">
+    <% if flash[:error].present? %>
+    <br />
+      <div class="cols-xs-12 alert alert-danger">
+        <%= flash[:error].html_safe%>
+      </div>
+    <% end %>
+  </div>
 
   <%= yield %>
 
@@ -66,7 +85,7 @@
         
         <div class="links col-sm-3">
          <br />      
-          <%= link_to 'Stats', '#' %>
+          <%= link_to 'Stats', stats_path %>
         </div>
         
         <div class="links col-sm-3">

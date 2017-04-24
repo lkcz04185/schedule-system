@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'day/:date' => 'enrollments#index', on: :collection
   end
   resources :members
+  resources :stats
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

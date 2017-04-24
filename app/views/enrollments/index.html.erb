@@ -10,117 +10,94 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $("#datepicker").datepicker({ 
-      dateFormat: 'yy-mm-dd',
-      onSelect: function(date) {
-      window.location.href = "/enrollments/day/" + date }}); 
-  });
-  </script>
 </head>
-<body>
- 
-<div id="datepicker"></div>
- 
- 
-</body>
 
-  <!-- <html lang="en">
 
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>jQuery UI Datepicker - Display inline</title>
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-      <link rel="stylesheet" href="/resources/demos/style.css">
-      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-      <script>
-        $( function() {
-          //$( "#datepicker" ).datepicker({ minDate: -20, maxDate: "+1M +10D" });
-          $( "#datepicker" ).datepicker({ onSelect: function(date) {
-            dateArray = date.split('/');
-            window.location.href = "/enrollments/day/" + (dateArray[2]+"-"+dateArray[0]+"-"+dateArray[1]);
-            }});
-         
-      </script>
-    </head>
-    
-    <body>
-      Date: <%= @date %> <div id="datepicker"></div> 
-    </body>
-  
-  </html> -->
-
-  <br />
-
-  <div class="panel panel-primary">
-    <!-- Default panel contents -->
-    <div class="panel-heading">
-      <h4> Current Enrollments</h4>
-      <p> <b> <%= @date.strftime("%a %e.%_m. %_Y") %> </b> <p>
-              
-    </div>
-    
-    <% @users.each do |user| %>
-      <% if @timeslots.where("day = ?", @date.strftime("%u")).exists? %>
+  <script>
+    $( function() {
       
-        <div class="panel-body">
-          <p>Go to "Enroll" to enroll in this week's training:</p>
-        </div>
+      $("#datepicker").datepicker({ 
+        dateFormat: 'yy-mm-dd',
+        gotoCurrent: true,
+        onSelect: function(date, inst) {
+        window.location.href = "/enrollments/day/" + date 
+        console.log(inst.data);
+        }
+      });
         
+    });
+  </script>
+ 
+  <div id="datepicker"></div>
+    
+    <br />
+
+    <div class="panel panel-primary">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+        <h4> Current Enrollments</h4>
+        <p> <b> <%= @date.strftime("%a, %e.%_m. %_Y") %> </b> <p>                
+      </div>
+      
+      <% if @timeslots.where("day = ?", @date.strftime("%u")).exists? %>
+        <div class="panel-body">
+            <p>Go to "Enroll" to enroll in this week's training:</p>
+        </div>  
+          
         <table class="table">
           <thead>  
             <tr>
-              <th>Name</th>
-              
-              <% @timeslots.each do |timeslot| %>
-                  <th><%= timeslot.start_time %> - <%=timeslot.finish_time %> </th>
-              <% end %>
+              <th>Name</th>                
+                <% @timeslots.each do |timeslot| %>
+              <th><%= timeslot.start_time %> - <%=timeslot.finish_time %> </th>
+                <% end %>
             </tr>
           </thead>
-
-   
+     
+        <% if @enrollments.exists? %>
           <tbody>
-            <tr>
-              <% if user.enrollments.where("date = ?", @date).exists? %>
+          <% @users.each do |user| %>
+            <% if user.enrollments.where("date = ?", @date).exists? %>        
+              <tr>
                 <td>
-                  <%= user.name %> <%= user.surname %>
+                <%= user.name %> <%= user.surname %>
                 </td>
-            
-                <% @timeslots.each do |time_slot| %>            
               
-                <td>
-                  <% if user.enrollments.where(:time_slot, time_slot) %>
-                  X
-                  <% end %>
-                </td>
-            
+                <% @timeslots.each do |time_slot| %>            
+                  <td>
+                    <% if time_slot.enrollments.where(:time_slot_id, time_slot) %>
+                    X <%= @date.to_s %>
+                    <% end %>
+                  </td>
                 <% end %>
-              <% else %>
-                <td>
-                  <i> Nobody has enrolled so far. </i>
-                </td>
-              <% end %>  
-            </tr>    
+              </tr>
+            <% end %>
+          <% end %> 
+        <% else %>
+            <tr>
+              <td>
+              <i> Nobody has enrolled so far. </i>
+              </td>
+            </tr>
+        <% end %>
+              
           </tbody>         
 
-        </table>
+          </table>
 
-      </div>
-            
-   <%= link_to 'Enroll', new_enrollment_path(date: @date), class: 'btn btn-primary'%>
+        </div>
+
+     <%= link_to 'Enroll', new_enrollment_path(date: @date), class: 'btn btn-primary'%>
+          
+      <% else %>
+
+        <div class="panel-body">
+          <p>No training available for today, please select another day to enroll.</p>
+        </div>
         
-        <% else %>
+      <% end %> 
 
-      <div class="panel-body">
-        <p>No training available for today, please select another day to enroll.</p>
-      </div>
-
-       <% end %>
-      
-    <% end %> 
+  </div>
 
 </div>
 
