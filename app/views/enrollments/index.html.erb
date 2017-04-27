@@ -33,72 +33,98 @@
     <br />
 
     <div class="panel panel-primary">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <h4> Current Enrollments</h4>
-        <p> <b> <%= @date.strftime("%a, %e.%_m. %_Y") %> </b> <p>                
-      </div>
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h4> Current Enrollments</h4>
+      <p> <b> <%= @date.strftime("%a %e.%_m. %_Y") %> </b> <p>
+              
+    </div>
+    
+    <% if @timeslots.where("day = ?", @date.strftime("%u")).exists? %>
+
+       
       
-      <% if @timeslots.where("day = ?", @date.strftime("%u")).exists? %>
         <div class="panel-body">
-            <p>Go to "Enroll" to enroll in this week's training:</p>
-        </div>  
-          
+          <p>Go to "Enroll" to enroll in this week's training:</p>
+        </div>
+
+        
         <table class="table">
           <thead>  
             <tr>
-              <th>Name</th>                
-                <% @timeslots.each do |timeslot| %>
-              <th><%= timeslot.start_time %> - <%=timeslot.finish_time %> </th>
-                <% end %>
+              <th>Name</th>
+              
+              <% @timeslots.each do |timeslot| %>
+                  <th><%= timeslot.start_time %> - <%=timeslot.finish_time %> </th>
+              <% end %>
             </tr>
           </thead>
-     
-        <% if @enrollments.exists? %>
+
+   
           <tbody>
-          <% @users.each do |user| %>
-            <% if user.enrollments.where("date = ?", @date).exists? %>        
+          <% if @enrollments.count > 0 %>
+            <% @users.each do |user| %>
               <tr>
-                <td>
-                <%= user.name %> <%= user.surname %>
-                </td>
-              
-                <% @timeslots.each do |time_slot| %>            
+                <% if user.enrollments.where(date: @date).exists? %>
                   <td>
-                    <% if time_slot.enrollments.where(:time_slot_id, time_slot) %>
-                    X <%= @date.to_s %>
-                    <% end %>
+                    <%= user.name %> <%= user.surname %>
                   </td>
+                               
+                  <% @timeslots.each do |time_slot| %>            
+                   
+                    <% if user.enrollments.where(time_slot_id: time_slot.id, date: @date).exists? %>
+                      <td>
+                        <input disabled="disabled" type="checkbox" checked>
+                        <%= time_slot.id %>
+                        <%= @date %>
+                       </td>
+                    <% else %>                    
+                      <td>
+                      <input disabled="disabled" type="checkbox">
+                      </td>
+                    <% end %>
+                  
+                  <% end %>
                 <% end %>
-              </tr>
+                </tr>
             <% end %>
-          <% end %> 
-        <% else %>
+          
+          <% else %>
+            
             <tr>
               <td>
-              <i> Nobody has enrolled so far. </i>
+                <i> Nobody has enrolled so far. </i>
               </td>
+
+              <% @timeslots.each do |time_slot| %>
+              <td>
+                <input disabled="disabled" type="checkbox">
+              </td>
+              <% end %>
             </tr>
-        <% end %>
-              
-          </tbody>         
-
-          </table>
-
-        </div>
-
-     <%= link_to 'Enroll', new_enrollment_path(date: @date), class: 'btn btn-primary'%>
+            <% end %>  
           
-      <% else %>
+          </tbody>
 
-        <div class="panel-body">
-          <p>No training available for today, please select another day to enroll.</p>
-        </div>
+                 
+
+        </table>
+
+      </div>
+            
+   <%= link_to 'Enroll', new_enrollment_path(date: @date), class: 'btn btn-primary'%>
         
-      <% end %> 
+        <% else %>
+
+      <div class="panel-body">
+        <p>No training available for today, please select another day to enroll.</p>
+      </div>
+
+      
+      
+    <% end %>
 
   </div>
 
 </div>
-
 
