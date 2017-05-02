@@ -1,4 +1,4 @@
-<br/>
+  <br/>
 <div class="col-xs-10 col-xs-offset-1">
   
 
@@ -75,8 +75,6 @@
                     <% if user.enrollments.where(time_slot_id: time_slot.id, date: @date).exists? %>
                       <td>
                         <input disabled="disabled" type="checkbox" checked>
-                        <%= time_slot.id %>
-                        <%= @date %>
                        </td>
                     <% else %>                    
                       <td>

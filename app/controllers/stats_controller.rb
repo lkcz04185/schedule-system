@@ -7,7 +7,11 @@ class StatsController < ApplicationController
 
       @enrollments_counts = Enrollment.where(date: from..to).select(:date).group(:date)
       @enrollments = Enrollment.where(date: from..to).group_by(&:date)
+      @enrollments_sum = Enrollment.where(date: from..to)
+      @enrollments_total = @enrollments_sum.group_by{|e| [e.user_id, e.date]}
       @enrolled_members = Enrollment.where(date: from..to).group_by(&:user_id)
+      
+
       # <th class="dates"><%= (enrollment.date).strftime("%e.%_m.") %>
       # <% @enrollments.each do |enrollment| %>
       #     <tr>

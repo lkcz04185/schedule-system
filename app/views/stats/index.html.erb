@@ -72,15 +72,14 @@
         
         <tbody>
        
-          <tr>           
-            <td>
-             
-            </td>
-           <% @enrollments_counts.each do |date, enrollment| %>
-            <td> <%= date %> </td>
-             <% end %>           
+       <% @users.each do |user| %>
+        <% @enrollments_total.each do |date, enrollment| %>
+          <tr>
+            <td> <%= user_id %> </td>
+            <td> <%= @enrollments_total.inspect %> </td>    
+                 
           </tr>
-       
+         <% end %>
 
           
         </tbody>         
