@@ -66,20 +66,30 @@
             <th>Name</th>
             <% @enrollments.each do |date, enrollment| %>
             <th> <%= date.strftime("%e.%_m.") %> </th>
-             <% end %>             
+             <% end %>
+            <th>Total</th>            
           </tr>
         </thead>
         
         <tbody>
        
-       <% @users.each do |user| %>
-        <% @enrollments_total.each do |date, enrollment| %>
-          <tr>
-            <td> <%= user_id %> </td>
-            <td> <%= @enrollments_total.inspect %> </td>    
-                 
-          </tr>
-         <% end %>
+      <% @enrolled_members.each do |id, total_enrollments| %>
+        <% @users.each do |user| %>
+        <tr>
+          <% if user.id == id %>
+            <td> <%= user.name %> <%= user.surname %> </td>
+              <% @enrollments_total.each do |date, enrollment| %>
+                <% if date[0] == user.id %>
+                  <td> <%= enrollment.count %> </td>
+                <% end %>
+              <% end %>
+              <td> <%= total_enrollments.count %> </td>
+          <% end %>
+        </tr>
+        <% end %>
+      <% end %>
+
+       
 
           
         </tbody>         
