@@ -2,6 +2,7 @@
 <div class="container">
 
   <script>
+
   $( function() {
       from = $( "#from" )
         .datepicker({
@@ -33,16 +34,18 @@
       }
       return date
       }
-  } );
+  });
+
+
   </script>
 
 
 
   <%= form_tag stats_path, method: :get do %>
   <label for="from">From</label>
-  <input type="text" id="from" name="from">
+  <input type="text" id="from" name="from" required="true">
   <label for="to">to</label>
-  <input type="text" id="to" name="to">
+  <input type="text" id="to" name="to"  required="true">
   <%= submit_tag 'Search', class: 'btn' %>
   <% end %>
  
@@ -64,37 +67,40 @@
         <thead>  
           <tr>
             <th>Name</th>
-            <% @enrollments.each do |date, enrollment| %>
+            <% @enrollments_date.each do |date, enrollment| %>
             <th> <%= date.strftime("%e.%_m.") %> </th>
              <% end %>
-            <th>Total</th>            
+             <th> Total </th>          
           </tr>
         </thead>
         
         <tbody>
-       
-      <% @enrolled_members.each do |id, total_enrollments| %>
-        <% @users.each do |user| %>
-        <tr>
-          <% if user.id == id %>
-            <td> <%= user.name %> <%= user.surname %> </td>
-              <% @enrollments_total.each do |date, enrollment| %>
-                <% if date[0] == user.id %>
-                  <td> <%= enrollment.count %> </td>
-                <% end %>
+          
+          <% @users.each do |user| %>
+            <% @enrollments_user.each do |user_id, enrollment| %>
+              <% if user.id == user_id %>
+                <tr>
+                  <td> <%= user.name %> <%= user.surname %> </td>
+                       <% @enrollments_date.each do |date, enrollment| %>
+                        <% enrollment.each do |item| %>
+                          <% if date == item.date && user.id == item.user_id  %>
+                            <% @count += 1%>
+                          <%end %>
+                        <% end %>
+                          <td class="stats"> <%= @count %> </td>
+                          <% @count = 0 %>
+                        <% end %>
+                        <td class="stats"> <%= enrollment.count %> </td> 
+                </tr>    
               <% end %>
-              <td> <%= total_enrollments.count %> </td>
-          <% end %>
-        </tr>
-        <% end %>
-      <% end %>
-
-       
-
+            <% end %>
+          <% end %>          
           
         </tbody>         
        
       </table>
+
     </div>
+    <%= link_to "Clear Form", stats_path, class: 'btn btn-danger' %> 
   </div>
 
